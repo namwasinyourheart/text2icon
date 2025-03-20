@@ -1,0 +1,14 @@
+model:
+    model_name_or_path: "sd-legacy/stable-diffusion-v1-5"
+    lora_path: exps/ft_sd15_lora/results/lora_stable-diffusion-v1-5_rank4_s7300_r256_20250320-075820.safetensors
+    output_dir: "./output_dir"
+
+generate:
+  prompt: ['an icon of a phone', 'an icon of an laptop', 'an icon of a TV', 'an icon of a headphone', 'an icon of a earphone']
+  negative_prompt: "low quality, blur, watermark, words, name"
+  num_images_per_prompt: 4
+  generator_seed: 202502
+  width: 256
+  height: 256
+  guidance_scale: 8.5
+  scheduler: "EulerDiscreteScheduler"

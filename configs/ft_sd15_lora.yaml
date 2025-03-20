@@ -1,0 +1,47 @@
+exp_manager:
+  exp_name: "ft_sd15_lora"
+  seed: 202502
+  task_name: "stable_diffusion_finetune"
+  model_name: "sd-legacy/stable-diffusion-v1-5"
+  dataset_name: "yirenlu/heroicons"
+  wandb:
+    use_wandb: true
+    project: "text2icon_ft_sd"
+    log_artifact: true
+    artifact_types: ['exp', 'data', 'configs', 'results', 'checkpoints']
+
+prepare_data:
+  dataset:
+    dataset_name: "yirenlu/heroicons"
+    train_data_dir: 
+    train_n_samples: -1
+  image:
+    resolution: 256
+    center_crop: true
+    random_flip: true
+
+prepare_model:
+  pretrained_model_name_or_path: "sd-legacy/stable-diffusion-v1-5"
+  use_peft: true
+  lora:
+    r: 4
+    lora_alpha: 4
+    target_modules: ["to_k", "to_q", "to_v", "to_out.0"]
+
+train:
+  optimizer:
+    learning_rate: 1e-5
+    adam_beta1: 0.9
+    adam_beta2: 0.999
+    adam_weight_decay: 1e-2
+    adam_epsilon: 1e-08
+  train_args:
+    resume_from_checkpoint:
+    per_device_train_batch_size: 4
+    gradient_accumulation_steps: 1
+    gradient_checkpointing: 
+    num_train_epochs: 100
+    max_train_steps: 
+    checkpointing_steps: 
+    lr_scheduler_name: "constant"
+    max_grad_norm: 1.0
